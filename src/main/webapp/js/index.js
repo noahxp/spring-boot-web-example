@@ -1,0 +1,1 @@
+var index="this is a index file"
