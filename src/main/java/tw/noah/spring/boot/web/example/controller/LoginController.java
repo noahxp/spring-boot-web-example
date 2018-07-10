@@ -13,6 +13,7 @@ public class LoginController {
 
   @RequestMapping(value="/" , method = RequestMethod.GET)
   public String login(){
+    log.info("go");
     return "index";
   }
 

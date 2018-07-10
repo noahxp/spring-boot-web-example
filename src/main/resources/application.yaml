@@ -1,0 +1,82 @@
+# special spring boot setting
+
+---
+spring:
+  profiles:
+    active: local
+  main:
+    # 關閉 spring boot logo
+    banner-mode: 'off'
+  mvc:
+    view:
+      # 使用 jsp 當 mvc 的 view 需宣告這二個，如果是用 thymeleaf 則有他的預設值
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      # 為了測試，先改為 create-drop
+##      ddl-auto: none
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        use_sql_comments: true
+
+my:
+  mail:
+    server: myoms.com.tw
+    sender: mail@myoms.com.tw
+    locale: zh-tw
+your:
+  date: 2010/01/01
+  lists: 1,2,3,4,5
+
+debug_mode: true
+
+---
+spring:
+  profiles: local
+
+proxy:
+  domain: 'none'
+  port: 0
+
+server:
+  port: 8080
+
+---
+spring:
+  profiles: dev
+
+proxy:
+  domain: dev.proxy.com
+  port: 3128
+
+server:
+  port: 8080
+
+
+---
+spring:
+  profiles: stg
+
+proxy:
+  domain: stg.proxy.com
+  port: 3128
+
+server:
+  port: 8080
+
+
+---
+spring:
+  profiles: prod
+
+proxy:
+  domain: prod.proxy.com
+  port: 3128
+
+server:
+  port: 8080
