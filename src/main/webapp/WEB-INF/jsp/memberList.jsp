@@ -4,15 +4,9 @@
 
 <html>
 <head>
-<script src="/js/index.js"></script>
+    <title>welcome</title>
 </head>
 <body>
-<form name="form1" type="submit" method="post" action="/login/check">
-    user name:<input type="text" name="username"><br>
-    password:<input type="password" name="password"><br>
-    <input type="submit" value="login">
-</form>
-
+Hi ${user.firstName} ${user.familyName}, your age is ${user.age} <br>
 </body>
-
 </html>
