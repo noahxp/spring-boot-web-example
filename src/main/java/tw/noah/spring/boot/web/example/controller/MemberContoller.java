@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import tw.noah.spring.boot.web.example.entity.SellItem;
+import tw.noah.spring.boot.web.example.entity.books.SellItem;
 import tw.noah.spring.boot.web.example.model.User;
 import tw.noah.spring.boot.web.example.service.BooksService;
 

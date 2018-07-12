@@ -1,4 +1,4 @@
-package tw.noah.spring.boot.web.example.entity;
+package tw.noah.spring.boot.web.example.entity.consumer;
 
 import java.sql.Timestamp;
 import java.util.Objects;
