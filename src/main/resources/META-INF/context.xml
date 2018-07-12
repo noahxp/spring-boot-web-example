@@ -1,0 +1,54 @@
+<Context distributable="true">
+
+  <!-- books -->
+  <Resource
+    auth="Container"
+    name="jdbc/books"
+    type="javax.sql.DataSource"
+    user="root"
+    password="1qaz2wsx"
+    proxool.driver-url="jdbc:mysql://localhost:3306/books?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8"
+    proxool.alias="books"
+    proxool.minimum-connection-count="1"
+    proxool.maximum-connection-count="20"
+    proxool.simultaneous-build-throttle="20"
+    proxool.house-keeping-sleep-time="30000"
+    proxool.recently-started-threshold="40000"
+    proxool.overload-without-refusal-lifetime="50000"
+    proxool.maximum-active-time="120000"
+    proxool.maximum-connection-lifetime="300000"
+    proxool.house-keeping-test-sql="select now() "
+    proxool.test-before-use="true"
+    proxool.trace="true"
+    proxool.verbose="true"
+    proxool.driver-class="com.mysql.jdbc.Driver"
+    factory="org.logicalcobwebs.proxool.ProxoolDataSource"
+    delegateProperties="foo=1,bar=true"/>
+
+
+  <!-- consumer -->
+  <Resource
+    auth="Container"
+    name="jdbc/books"
+    type="javax.sql.DataSource"
+    user="root"
+    password="1qaz2wsx"
+    proxool.driver-url="jdbc:mysql://localhost:3306/consumer?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8"
+    proxool.alias="consumer"
+    proxool.minimum-connection-count="1"
+    proxool.maximum-connection-count="20"
+    proxool.simultaneous-build-throttle="20"
+    proxool.house-keeping-sleep-time="30000"
+    proxool.recently-started-threshold="40000"
+    proxool.overload-without-refusal-lifetime="50000"
+    proxool.maximum-active-time="120000"
+    proxool.maximum-connection-lifetime="300000"
+    proxool.house-keeping-test-sql="select now() "
+    proxool.test-before-use="true"
+    proxool.trace="true"
+    proxool.verbose="true"
+    proxool.driver-class="com.mysql.jdbc.Driver"
+    factory="org.logicalcobwebs.proxool.ProxoolDataSource"
+    delegateProperties="foo=1,bar=true"/>
+
+</Context>

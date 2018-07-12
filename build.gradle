@@ -37,9 +37,21 @@ configurations {
     providedRuntime
 }
 
+configurations.all {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    exclude module: "logback-classic"
+}
+
 dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core'
+    // binding slf4j to log4j2
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.0'
+    // binding common-logging to log4j2
+    compile group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.11.0'
+
     compileOnly('org.projectlombok:lombok')
 
     // https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper
@@ -47,7 +59,14 @@ dependencies {
     providedCompile "org.apache.tomcat.embed:tomcat-embed-jasper"
     providedCompile "javax.servlet:jstl"
 
-    compile('org.springframework.boot:spring-boot-starter-aop')
+    // https://mvnrepository.com/artifact/com.cloudhopper.proxool/proxool
+    runtime group: 'com.cloudhopper.proxool', name: 'proxool', version: '0.9.1'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    runtime group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+
+
+
+//    compile('org.springframework.boot:spring-boot-starter-aop')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
 //    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 //    compile('org.springframework.boot:spring-boot-starter-data-redis')

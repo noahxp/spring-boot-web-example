@@ -13,16 +13,44 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
 
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      # 為了測試，先改為 create-drop
-##      ddl-auto: none
-#      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        use_sql_comments: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQLDialect
+  datasource:
+    url: jdbc:mysql://localhost:3306/books?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1qaz2wsx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # old mysql jdbc driver name was : com.mysql.jdbc.Driver
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
+
+
+#logging.level.org.hibernate.SQL=DEBUG
+#logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+
+
+
+#    jndi-name: java:comp/env/jdbc/books
+
+#    books:
+#      jndi-name: java:comp/env/jdbc/books
+#    consumer:
+#      jndi-name: java:comp/env/jdbc/consumer
 
 my:
   mail:
