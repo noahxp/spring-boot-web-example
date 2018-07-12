@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import tw.noah.spring.boot.web.example.entity.SellItem;
 
 @Repository
-public interface SellItemDAO extends JpaRepository {
-//  List<SellItem> findByItempriceGranterThan(int itemPrice);
+public interface SellItemDAO extends JpaRepository<SellItem,Long> {
+  List<SellItem> findByUnitPriceGreaterThan(int unitPrice);
 }

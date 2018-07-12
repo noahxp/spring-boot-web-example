@@ -18,7 +18,6 @@ public class BooksServiceImpl implements BooksService {
   }
 
   public List<SellItem> findByItemPriceGraterThan(int itemPrice){
-//    return sellItemDAO.findByItempriceGranterThan(itemPrice);
-    return null;
+    return sellItemDAO.findByUnitPriceGreaterThan(itemPrice);
   }
 }
