@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import tw.noah.spring.boot.web.example.entity.books.SellItem;
+import tw.noah.spring.boot.web.example.entity.Books;
+import tw.noah.spring.boot.web.example.entity.Employee;
 import tw.noah.spring.boot.web.example.model.User;
 import tw.noah.spring.boot.web.example.service.BooksService;
+import tw.noah.spring.boot.web.example.service.EmployeeService;
 
 @Controller
 @Log4j2
@@ -18,6 +20,9 @@ public class MemberContoller {
 
   @Resource
   private BooksService booksService;
+
+  @Resource
+  private EmployeeService employeeService;
 
   @RequestMapping(value = "/welcome",method = RequestMethod.GET)
   public String memberHome(Model m){
@@ -28,10 +33,11 @@ public class MemberContoller {
 
     m.addAttribute(user);
 
-    List<SellItem> sellItems = booksService.findAllSellItem();
+    List<Books> booksList = booksService.findAllSellItem();
+    m.addAllAttributes(booksList);
 
-    m.addAllAttributes(sellItems);
-
+    List<Employee> employeeList = employeeService.getAllEmployee();
+    m.addAllAttributes(employeeList);
 
     return "memberList";
   }

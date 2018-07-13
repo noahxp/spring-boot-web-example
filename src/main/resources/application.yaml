@@ -13,39 +13,52 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
 
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
-        dialect: org.hibernate.dialect.MySQLDialect
+
+  # jpa:
+  #   show-sql: true
+  #   hibernate:
+  #     ddl-auto: none
+  #   database: default
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        use_sql_comments: true
+#        dialect: org.hibernate.dialect.MySQLDialect
+##### default JPA setting , only for single Connection #####
 #  datasource:
 #    jdbc-url: jdbc:mysql://localhost:3306/books?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
 #    username: root
 #    password: 1qaz2wsx
 #    driver-class-name: com.mysql.cj.jdbc.Driver
+
 books:
   datasource:
-    # default jpa using spring.datasource.url , in spring boot 2.0 custom naming change to jdbc-url
-    jdbc-url: jdbc:mysql://localhost:3306/books?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: 1qaz2wsx
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    properties:
-          hibernate:
-            dialect: org.hibernate.dialect.MySQLDialect
-consumer:
-  datasource:
-    jdbc-url: jdbc:mysql://localhost:3306/consumer?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    jdbc-url: jdbc:mysql://localhost:3306/book_store?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 1qaz2wsx
     driver-class-name: com.mysql.cj.jdbc.Driver
     properties:
       hibernate:
+        show-sql: true
         dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
+company:
+  datasource:
+    jdbc-url: jdbc:mysql://localhost:3306/company?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1qaz2wsx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
+#        format_sql: true
+#        use_sql_comments: true
     # old mysql jdbc driver name was : com.mysql.jdbc.Driver
 
 logging:

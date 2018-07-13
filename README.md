@@ -8,3 +8,7 @@ spring boot web application example
     * [src/main/resources/static](src/main/resources/static)
 - Thymeleaf template 資料夾
   - [src/main/resources/templates](src/main/resources/templates)
+  
+  
+ ## JPA Query Method : 
+ 官網：https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods

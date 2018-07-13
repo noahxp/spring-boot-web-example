@@ -8,5 +8,8 @@
 </head>
 <body>
 Hi ${user.firstName} ${user.familyName}, your age is ${user.age} <br>
+<hr>
+${employeeList.size()}
+<hr>
 </body>
 </html>
