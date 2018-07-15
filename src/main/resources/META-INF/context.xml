@@ -29,12 +29,12 @@
   <!-- consumer -->
   <Resource
     auth="Container"
-    name="jdbc/books"
+    name="jdbc/company"
     type="javax.sql.DataSource"
     user="root"
     password="1qaz2wsx"
-    proxool.driver-url="jdbc:mysql://localhost:3306/consumer?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8"
-    proxool.alias="consumer"
+    proxool.driver-url="jdbc:mysql://localhost:3306/company?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8"
+    proxool.alias="company"
     proxool.minimum-connection-count="1"
     proxool.maximum-connection-count="20"
     proxool.simultaneous-build-throttle="20"

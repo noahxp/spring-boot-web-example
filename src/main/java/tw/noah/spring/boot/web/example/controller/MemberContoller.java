@@ -33,7 +33,7 @@ public class MemberContoller {
 
     m.addAttribute(user);
 
-    List<Books> booksList = booksService.findAllSellItem();
+    List<Books> booksList = booksService.findAllBooks();
     m.addAllAttributes(booksList);
 
     List<Employee> employeeList = employeeService.getAllEmployee();

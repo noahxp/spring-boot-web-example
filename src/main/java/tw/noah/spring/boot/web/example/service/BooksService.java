@@ -4,5 +4,5 @@ import java.util.List;
 import tw.noah.spring.boot.web.example.entity.Books;
 
 public interface BooksService {
-  List<Books> findAllSellItem();
+  List<Books> findAllBooks();
 }

@@ -13,11 +13,10 @@ import tw.noah.spring.boot.web.example.service.BooksService;
 @EnableTransactionManagement
 public class BooksServiceImpl implements BooksService {
 
-//  @Resource
   @Autowired
   private BooksDAO booksDAO;
 
-  public List<Books> findAllSellItem(){
+  public List<Books> findAllBooks(){
     return booksDAO.findAll();
   }
 
