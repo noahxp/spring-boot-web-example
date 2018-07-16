@@ -54,7 +54,4 @@ public class CompanyDataSourceConfig {
 
     return factoryBean;
   }
-
-
-
 }

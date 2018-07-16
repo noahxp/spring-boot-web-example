@@ -5,4 +5,5 @@ import tw.noah.spring.boot.web.example.entity.Books;
 
 public interface BooksService {
   List<Books> findAllBooks();
+
 }

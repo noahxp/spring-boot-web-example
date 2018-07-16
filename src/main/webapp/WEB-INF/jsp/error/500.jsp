@@ -20,11 +20,9 @@ internal server 500 @_@"
         if (exception!=null){  // jsp error
             java.io.StringWriter sw = new java.io.StringWriter();
             java.io.PrintWriter pw = new java.io.PrintWriter(sw);
-            exception.printStackTrace(pw);
+            exception.printStackTrace(pw);  // error stack to html page
             String errorStack = sw.getBuffer().toString();
             out.println(errorStack);
-        } else if (request.getAttribute("exceptionStack")!=null){  // strtus 's error , cann't use <s:property value="%{exceptionStack}"/> ,because jsp can't get s tag object
-            out.println(request.getAttribute("exceptionStack"));
         }
     %>
 		</pre>
