@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ShowErrorController {
-  @RequestMapping(value="/error" ,method = RequestMethod.GET)
+  @RequestMapping(value="/errors" ,method = RequestMethod.GET)
   public String error(){
     int c = 0/0;
     return null;
