@@ -31,30 +31,26 @@ public class BooksDataSourceConfig {
 
 //  private JndiDataSourceLookup lookup = new JndiDataSourceLookup();
 
-//  //TODO 這個寫法只支援... tomcat下的 war 部署？
-//  @Bean(name = "booksDatasource")
-//  @ConfigurationProperties(prefix = "books.datasource")
-//  public DataSource booksDataSource() {
-//    JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
-//    bean.setJndiName(env.getProperty("books.datasource.jndi-name"));
-////    bean.setJndiTemplate(); ???????
-//    bean.setProxyInterface(DataSource.class);
-//    bean.setLookupOnStartup(false);
-//    try {
-//      bean.afterPropertiesSet();
-//    } catch (NamingException e) {
-//      e.printStackTrace();
-//    }
-//    return (DataSource) bean.getObject();
-////    return lookup.getDataSource(env.getProperty("books.datasource.jndi-name"));
-////    return DataSourceBuilder.create().build();
-//  }
-
+  // TODO jndi uncompleted
+  // https://stackoverflow.com/questions/32776410/configure-mutiple-datasource-in-spring-boot-with-jndi
+  // https://stackoverflow.com/questions/43500462/spring-boot-jndi-application-setting
+  // https://blog.csdn.net/zhangshufei8001/article/details/53333501
+  // 有可能需要打包成 war ，到 tomcat 裡跑， jndi 才起的來 (embeded 的不行)
   @Bean(name = "booksDatasource")
   @ConfigurationProperties(prefix = "books.datasource")
-  public DataSource booksDataSource(){
-    return DataSourceBuilder.create().build();
+  public DataSource booksDataSource() {
+    JndiDataSourceLookup jndiLookup = new JndiDataSourceLookup();
+    log.info("books.datasource.jndi-name=" + env.getProperty("books.datasource.jndi-name",String.class));
+    DataSource dataSource = jndiLookup.getDataSource(env.getProperty("books.datasource.jndi-name",String.class));
+
+    return dataSource;
   }
+
+//  @Bean(name = "booksDatasource")
+//  @ConfigurationProperties(prefix = "books.datasource")
+//  public DataSource booksDataSource(){
+//    return DataSourceBuilder.create().build();
+//  }
 
 
   @Bean(name="booksTx")
