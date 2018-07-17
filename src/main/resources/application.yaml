@@ -14,70 +14,26 @@ spring:
       suffix: .jsp
 
 
-  # jpa:
-  #   show-sql: true
-  #   hibernate:
-  #     ddl-auto: none
-  #   database: default
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        use_sql_comments: true
-#        dialect: org.hibernate.dialect.MySQLDialect
-##### default JPA setting , only for single Connection #####
+##### single conneciton #####
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: none
+#    database: default
+#  properties:
+#    hibernate:
+#      format_sql: true
+#      use_sql_comments: true
+#      dialect: org.hibernate.dialect.MySQLDialect
+#  #### default JPA setting , only for single Connection #####
 #  datasource:
 #    jdbc-url: jdbc:mysql://localhost:3306/books?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
 #    username: root
 #    password: 1qaz2wsx
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 
-books:
-  datasource:
-
-    jndi-name: jdbc/book_store
-#    jndi-name: java:comp/env/jdbc/book_store
-#    jdbc-url: jdbc:mysql://localhost:3306/book_store?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
-#    username: root
-#    password: 1qaz2wsx
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-    properties:
-      hibernate:
-        show-sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
-        format_sql: true
-        use_sql_comments: true
-        ddl-auto: false
-company:
-  datasource:
-    jdbc-url: jdbc:mysql://localhost:3306/company?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
-    jndi-name: java:comp/env/jdbc/company
-    username: root
-    password: 1qaz2wsx
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    properties:
-      hibernate:
-        show-sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
-        format_sql: true
-        use_sql_comments: true
-        ddl-auto: false
-#        format_sql: true
-#        use_sql_comments: true
-    # old mysql jdbc driver name was : com.mysql.jdbc.Driver
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: trace
 
 
-#logging.level.org.hibernate.SQL=DEBUG
-#logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 
 
@@ -103,9 +59,32 @@ debug_mode: true
 spring:
   profiles: local
 
-proxy:
-  domain: 'none'
-  port: 0
+books:
+  datasource:
+    jdbc-url: jdbc:mysql://localhost:3306/book_store?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1qaz2wsx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
+company:
+  datasource:
+    jdbc-url: jdbc:mysql://localhost:3306/company?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1qaz2wsx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
 
 server:
   port: 8080
@@ -114,33 +93,83 @@ server:
 spring:
   profiles: dev
 
-proxy:
-  domain: dev.proxy.com
-  port: 3128
+books:
+  datasource:
+    jndi-name: jdbc/book_store
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
+company:
+  datasource:
+    jndi-name: jdbc/company
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
+
 
 server:
   port: 8080
-
 
 ---
 spring:
   profiles: stg
 
-proxy:
-  domain: stg.proxy.com
-  port: 3128
+books:
+  datasource:
+    jndi-name: jdbc/book_store
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
+company:
+  datasource:
+    jndi-name: jdbc/company
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: false
 
 server:
   port: 8080
-
 
 ---
 spring:
   profiles: prod
 
-proxy:
-  domain: prod.proxy.com
-  port: 3128
+books:
+  datasource:
+    jndi-name: jdbc/book_store
+    properties:
+      hibernate:
+        show-sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+        use_sql_comments: true
+        ddl-auto: false
+company:
+  datasource:
+    jndi-name: jdbc/company
+    properties:
+      hibernate:
+        show-sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+        use_sql_comments: true
+        ddl-auto: false
 
 server:
   port: 8080

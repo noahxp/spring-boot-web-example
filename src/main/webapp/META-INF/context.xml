@@ -3,12 +3,12 @@
   <!-- books -->
   <Resource
     auth="Container"
-    name="jdbc/books"
+    name="jdbc/book_store"
     type="javax.sql.DataSource"
     user="root"
     password="1qaz2wsx"
-    proxool.driver-url="jdbc:mysql://localhost:3306/books?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8"
-    proxool.alias="books"
+    proxool.driver-url="jdbc:mysql://localhost:3306/book_store?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8"
+    proxool.alias="book_store"
     proxool.minimum-connection-count="1"
     proxool.maximum-connection-count="20"
     proxool.simultaneous-build-throttle="20"

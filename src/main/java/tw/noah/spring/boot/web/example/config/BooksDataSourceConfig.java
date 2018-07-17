@@ -17,6 +17,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.util.StringUtils;
 
 /**
  * reference document : https://github.com/spring-projects/spring-data-examples/tree/master/jpa/multiple-datasources
@@ -31,31 +32,33 @@ public class BooksDataSourceConfig {
 
 //  private JndiDataSourceLookup lookup = new JndiDataSourceLookup();
 
-  // TODO jndi uncompleted
-  // https://stackoverflow.com/questions/32776410/configure-mutiple-datasource-in-spring-boot-with-jndi
-  // https://stackoverflow.com/questions/43500462/spring-boot-jndi-application-setting
-  // https://blog.csdn.net/zhangshufei8001/article/details/53333501
-  // 有可能需要打包成 war ，到 tomcat 裡跑， jndi 才起的來 (embeded 的不行)
+  // 打包後，用 tomcat 起 Application 才能用 JNDI ，default Spring Application 只能用 spring data 預設模式連結，https://blog.csdn.net/zhangshufei8001/article/details/53333501
   @Bean(name = "booksDatasource")
   @ConfigurationProperties(prefix = "books.datasource")
   public DataSource booksDataSource() {
-    JndiDataSourceLookup jndiLookup = new JndiDataSourceLookup();
-    log.info("books.datasource.jndi-name=" + env.getProperty("books.datasource.jndi-name",String.class));
-    DataSource dataSource = jndiLookup.getDataSource(env.getProperty("books.datasource.jndi-name",String.class));
 
+    DataSource dataSource = null;
+
+    String jndiName = env.getProperty("books.datasource.jndi-name",String.class);
+    if (StringUtils.isEmpty(jndiName)){ // using default mode
+      dataSource = DataSourceBuilder.create().build();
+    }else{ // jndi mode
+      JndiDataSourceLookup jndiLookup = new JndiDataSourceLookup();
+      log.info("books.datasource.jndi-name=" + env.getProperty("books.datasource.jndi-name",String.class));
+      dataSource = jndiLookup.getDataSource(env.getProperty("books.datasource.jndi-name",String.class));
+    }
     return dataSource;
   }
-
-//  @Bean(name = "booksDatasource")
-//  @ConfigurationProperties(prefix = "books.datasource")
-//  public DataSource booksDataSource(){
-//    return DataSourceBuilder.create().build();
-//  }
 
 
   @Bean(name="booksTx")
   public PlatformTransactionManager booksTransactionManager(){
     return new JpaTransactionManager(booksFactoryBean().getObject());
+  }
+
+  @Bean(name="pdf")
+  public pdfDoc adfadf(){
+    return new PDfDoc()...
   }
 
   @Bean(name="booksFactoryBean")
