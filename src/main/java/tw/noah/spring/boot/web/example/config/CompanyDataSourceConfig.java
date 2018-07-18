@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @EnableJpaRepositories(entityManagerFactoryRef = "companyFactoryBean" , transactionManagerRef = "companyTx",basePackages = {"tw.noah.spring.boot.web.example.dao.company"})
@@ -25,9 +27,19 @@ public class CompanyDataSourceConfig {
 
   @Bean(name = "companyDatasource")
   @ConfigurationProperties(prefix = "company.datasource")
-  public DataSource companyDataSource(){
-    return DataSourceBuilder.create().build();
+  public DataSource companyDataSource() {
+
+    DataSource dataSource = null;
+
+    String jndiName = env.getProperty("company.datasource.jndi-name",String.class);
+    if (StringUtils.isEmpty(jndiName)){ // using default mode
+      dataSource = DataSourceBuilder.create().build();
+    }else{ // jndi mode
+      dataSource = new JndiDataSourceLookup().getDataSource(jndiName);
+    }
+    return dataSource;
   }
+
 
   @Bean(name="companyTx")
   public PlatformTransactionManager companyTransactionManager(){

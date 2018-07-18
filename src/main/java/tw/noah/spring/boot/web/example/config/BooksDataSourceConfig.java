@@ -1,7 +1,6 @@
 package tw.noah.spring.boot.web.example.config;
 
 import java.util.Properties;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
-import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -30,8 +28,6 @@ public class BooksDataSourceConfig {
   @Autowired
   private Environment env;
 
-//  private JndiDataSourceLookup lookup = new JndiDataSourceLookup();
-
   // 打包後，用 tomcat 起 Application 才能用 JNDI ，default Spring Application 只能用 spring data 預設模式連結，https://blog.csdn.net/zhangshufei8001/article/details/53333501
   @Bean(name = "booksDatasource")
   @ConfigurationProperties(prefix = "books.datasource")
@@ -43,10 +39,9 @@ public class BooksDataSourceConfig {
     if (StringUtils.isEmpty(jndiName)){ // using default mode
       dataSource = DataSourceBuilder.create().build();
     }else{ // jndi mode
-      JndiDataSourceLookup jndiLookup = new JndiDataSourceLookup();
-      log.info("books.datasource.jndi-name=" + env.getProperty("books.datasource.jndi-name",String.class));
-      dataSource = jndiLookup.getDataSource(env.getProperty("books.datasource.jndi-name",String.class));
+      dataSource = new JndiDataSourceLookup().getDataSource(jndiName);
     }
+
     return dataSource;
   }
 
@@ -56,10 +51,6 @@ public class BooksDataSourceConfig {
     return new JpaTransactionManager(booksFactoryBean().getObject());
   }
 
-  @Bean(name="pdf")
-  public pdfDoc adfadf(){
-    return new PDfDoc()...
-  }
 
   @Bean(name="booksFactoryBean")
   public LocalContainerEntityManagerFactoryBean booksFactoryBean(){
