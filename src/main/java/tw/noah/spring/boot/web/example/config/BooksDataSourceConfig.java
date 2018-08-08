@@ -4,6 +4,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +32,7 @@ public class BooksDataSourceConfig {
   // 打包後，用 tomcat 起 Application 才能用 JNDI ，default Spring Application 只能用 spring data 預設模式連結，https://blog.csdn.net/zhangshufei8001/article/details/53333501
   @Bean(name = "booksDatasource")
   @ConfigurationProperties(prefix = "books.datasource")
-  public DataSource booksDataSource() {
+  public DataSource dataSource() {
 
     DataSource dataSource = null;
 
@@ -47,13 +48,13 @@ public class BooksDataSourceConfig {
 
 
   @Bean(name="booksTx")
-  public PlatformTransactionManager booksTransactionManager(){
-    return new JpaTransactionManager(booksFactoryBean().getObject());
+  public PlatformTransactionManager transactionManager(@Qualifier("booksFactoryBean") LocalContainerEntityManagerFactoryBean factoryBean){
+    return new JpaTransactionManager(factoryBean.getObject());
   }
 
 
   @Bean(name="booksFactoryBean")
-  public LocalContainerEntityManagerFactoryBean booksFactoryBean(){
+  public LocalContainerEntityManagerFactoryBean factoryBean(@Qualifier("booksDatasource") DataSource dataSource){
     HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
     jpaVendorAdapter.setGenerateDdl(false);
     jpaVendorAdapter.setShowSql(env.getProperty("books.datasource.properties.hibernate.show-sql",Boolean.class));
@@ -65,7 +66,7 @@ public class BooksDataSourceConfig {
     prop.put("hibernate.use_sql_comments",env.getProperty("books.datasource.properties.hibernate.use_sql_comments",Boolean.class));
 
     LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-    factoryBean.setDataSource(booksDataSource());
+    factoryBean.setDataSource(dataSource);
     factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
     factoryBean.setPackagesToScan("tw.noah.spring.boot.web.example.entity");
     factoryBean.setJpaProperties(prop);

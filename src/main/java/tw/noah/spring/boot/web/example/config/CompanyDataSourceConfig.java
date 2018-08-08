@@ -4,6 +4,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +28,7 @@ public class CompanyDataSourceConfig {
 
   @Bean(name = "companyDatasource")
   @ConfigurationProperties(prefix = "company.datasource")
-  public DataSource companyDataSource() {
+  public DataSource dataSource() {
 
     DataSource dataSource = null;
 
@@ -42,12 +43,12 @@ public class CompanyDataSourceConfig {
 
 
   @Bean(name="companyTx")
-  public PlatformTransactionManager companyTransactionManager(){
-    return new JpaTransactionManager(companyFactoryBean().getObject());
+  public PlatformTransactionManager transactionManager(@Qualifier("companyFactoryBean") LocalContainerEntityManagerFactoryBean factoryBean){
+    return new JpaTransactionManager(factoryBean.getObject());
   }
 
   @Bean(name="companyFactoryBean")
-  public LocalContainerEntityManagerFactoryBean companyFactoryBean(){
+  public LocalContainerEntityManagerFactoryBean factoryBean(@Qualifier("companyDatasource") DataSource dataSource){
     HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
     jpaVendorAdapter.setGenerateDdl(false);
     jpaVendorAdapter.setShowSql(env.getProperty("company.datasource.properties.hibernate.show-sql",Boolean.class));
@@ -59,7 +60,7 @@ public class CompanyDataSourceConfig {
     prop.put("hibernate.use_sql_comments",env.getProperty("company.datasource.properties.hibernate.use_sql_comments",Boolean.class));
 
     LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-    factoryBean.setDataSource(companyDataSource());
+    factoryBean.setDataSource(dataSource);
     factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
     factoryBean.setPackagesToScan("tw.noah.spring.boot.web.example.entity");
     factoryBean.setJpaProperties(prop);
